@@ -6,7 +6,7 @@
 <title>NecroDL - Download Your Favorite Videos</title>
 <meta name="description" content="Paste a video link and download it in seconds. Fast, simple, free.">
 <meta name="theme-color" content="#0b0f17">
-<link rel="icon" href="img/icon.png">
+<link rel="icon" href="img/logo.png">
 <style>
 :root{--bg:#0b0f17;--card:#121826;--line:#26324a;--text:#f4f6fb;--mute:#97a3ba;--y:#ffd60a;--ink:#14110a}
 [data-theme=light]{--bg:#f6f4ec;--card:#fff;--line:#e0dccb;--text:#17150e;--mute:#6d6a5c}
@@ -96,6 +96,12 @@ i[data-i]{display:flex;flex:none}
 .menu>*{display:flex;align-items:center;gap:14px;width:100%;padding:17px 16px;text-align:left;border-bottom:1px solid var(--line)}.menu>:last-child{border:0}
 .menu em{font-style:normal;flex:1}.menu span{color:var(--mute);font-size:14px}.menu i[data-i]:last-child svg{width:18px;height:18px;color:var(--mute)}
 h3.sec{border-left:4px solid var(--y);padding-left:10px;color:var(--text);font-size:18px;margin:26px 0 12px}
+.top img{mix-blend-mode:normal}.btn svg{width:20px;height:20px}.ico svg{width:20px;height:20px}.star{display:flex}.star svg{width:24px;height:24px}
+.opt em{display:flex;align-items:center;gap:6px}.opt em svg{width:18px;height:18px}.menu>button>svg{width:20px;height:20px;color:var(--y)}
+.gmain{position:relative;border-radius:14px;overflow:hidden;background:#000;aspect-ratio:16/10;margin-top:6px}.gmain img{width:100%;height:100%;object-fit:contain;mix-blend-mode:normal}
+.gnav{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;background:var(--y);color:var(--ink);display:grid;place-items:center}.gnav.l{left:8px}.gnav.r{right:8px}.gnav svg{width:22px;height:22px}
+.gres{position:absolute;left:10px;bottom:10px;background:#000b;color:#fff;font-size:12px;padding:4px 8px;border-radius:8px}
+.gthumbs{display:flex;gap:8px;overflow-x:auto;margin-top:8px;padding-bottom:4px}.gthumbs img{width:64px;height:64px;flex:none;border-radius:10px;object-fit:cover;border:2px solid transparent;mix-blend-mode:normal;background:#000}.gthumbs img.on{border-color:var(--y)}
 </style>
 </head>
 <body>
@@ -103,11 +109,11 @@ h3.sec{border-left:4px solid var(--y);padding-left:10px;color:var(--text);font-s
 <div class="app">
 <main>
  <section class="screen on" id="home">
-  <div class="top"><img src="img/icon.png" alt="">NecroDL</div>
+  <div class="top"><img src="img/logo.png" alt="">NecroDL</div>
   <h1 data-k="hero">Download Your<br>Favorite <b>Videos</b></h1>
   <p class="sub">Paste the video link below and start downloading in seconds.</p>
   <div class="field"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width:22px;height:22px"><path d="M10 14a4 4 0 0 0 5.66 0l3-3a4 4 0 0 0-5.66-5.66l-1 1"/><path d="M14 10a4 4 0 0 0-5.66 0l-3 3a4 4 0 0 0 5.66 5.66l1-1"/></svg><input id="url" type="url" inputmode="url" placeholder="Paste video link here..." autocomplete="off" aria-label="Video link"></div>
-  <div class="row"><button class="btn y" id="go"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M8 11l4 4 4-4M5 16v3h14v-3"/></svg>Download</button><button class="btn" id="clear"><svg class="ic" viewBox="0 0 24 24"><path d="M8 4h8v4H8z"/><path d="M6 8h12v12H6z"/></svg>Paste</button></div>
+  <div class="row"><button class="btn y" id="go"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M8 11l4 4 4-4M5 16v3h14v-3"/></svg>Download</button><button class="btn" id="clear"><i data-i="paste"></i>Paste</button></div>
   <div id="status"></div><div id="found"></div>
   <div class="feats">
    <div class="feat"><b>Fast Download</b><span>Direct from the source</span></div>
@@ -124,7 +130,7 @@ h3.sec{border-left:4px solid var(--y);padding-left:10px;color:var(--text);font-s
   <div class="ring" id="ring"><div id="pct">0%</div></div>
   <p class="center" style="font-weight:700">Downloading...</p><p class="center sub" id="pBytes" style="margin-top:2px"></p>
   <div class="stats"><div><span>Speed</span><b id="pSpeed">-</b></div><div><span>Time remaining</span><b id="pEta">-</b></div><div><span>Quality</span><b id="pQ">-</b></div></div>
-  <button class="btn" id="cancel" style="width:100%"><svg class="ic" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>Cancel</button>
+  <button class="btn" id="cancel" style="width:100%"><i data-i="x"></i>Cancel</button>
  </section>
 
  <section class="screen" id="idle">
@@ -138,7 +144,15 @@ h3.sec{border-left:4px solid var(--y);padding-left:10px;color:var(--text);font-s
   <h1 class="center" style="font-size:28px">Download <b>Complete!</b></h1>
   <p class="sub center">Your video has been downloaded successfully.</p>
   <div class="media" style="margin:18px 0 12px"><img id="dThumb" alt="" referrerpolicy="no-referrer"><div><p id="dTitle"></p><small id="dMeta"></small></div></div>
-  <div class="opts"><button class="btn y" id="open"><svg class="ic" viewBox="0 0 24 24"><path d="M3 7h6l2 2h10v8a2 2 0 0 1-2 2H3z"/></svg>Open File</button><button class="btn" id="save"><svg class="ic" viewBox="0 0 24 24"><path d="M5 4h12l2 2v14H5z"/><path d="M8 4v6h8V4"/></svg>Save to Device</button><button class="btn" id="again"><svg class="ic" viewBox="0 0 24 24"><path d="M12 4v10M8 10l4 4 4-4"/><path d="M5 20h14"/></svg>Download Again</button></div>
+  <div class="opts"><button class="btn y" id="save"><i data-i="save"></i>Save to Device</button><button class="btn" id="mp3btn"><i data-i="music"></i>Download MP3</button><button class="btn" id="again"><i data-i="dl"></i>Download Again</button></div>
+ </section>
+
+ <section class="screen" id="gallery">
+  <div class="ph"><button id="gBack" aria-label="Back"><i data-i="back"></i></button><h2>Image Preview</h2></div>
+  <div class="gmain"><img id="gImg" alt="" referrerpolicy="no-referrer"><button class="gnav l" id="gPrev" aria-label="Previous"><i data-i="left"></i></button><button class="gnav r" id="gNext" aria-label="Next"><i data-i="chev"></i></button><span class="gres" id="gRes"></span></div>
+  <p class="sub" id="gCount"></p><div class="gthumbs" id="gTh"></div>
+  <button class="btn y" id="gOne" style="width:100%;margin-top:22px"><i data-i="dl"></i>Download This Image</button>
+  <button class="btn" id="gAll" style="width:100%;margin-top:10px"><i data-i="dl"></i><span id="gAllT"></span></button>
  </section>
 
  <section class="screen" id="history">
@@ -182,9 +196,11 @@ const fmt=b=>b>=1e9?(b/1e9).toFixed(1)+" GB":b>=1e6?(b/1e6).toFixed(1)+" MB":Mat
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const clock=s=>isFinite(s)?[s/3600|0,(s/60|0)%60,Math.round(s%60)].map(n=>String(n).padStart(2,"0")).join(":"):"-";
 
-const ICONS={"clock": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v5l3 2\"/>", "pencil": "<path d=\"M4 20h4L19 9l-4-4L4 16z\"/><path d=\"M13.5 6.5l4 4\"/>", "gear": "<circle cx=\"12\" cy=\"12\" r=\"3\"/><path d=\"M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z\"/>", "info": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 11v6M12 7.5v.5\"/>", "help": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17v.5\"/>", "out": "<path d=\"M9 4H5v16h4M16 8l4 4-4 4M20 12H9\"/>", "chev": "<path d=\"M9 5l7 7-7 7\"/>", "down": "<path d=\"M5 9l7 7 7-7\"/>", "back": "<path d=\"M19 12H5M11 6l-6 6 6 6\"/>", "dark": "<circle cx=\"12\" cy=\"12\" r=\"8\"/><path d=\"M12 4a8 8 0 0 0 0 16z\" fill=\"currentColor\"/>", "lang": "<circle cx=\"9\" cy=\"8\" r=\"3.5\"/><path d=\"M3 20c0-3.5 2.5-5.5 6-5.5\"/><circle cx=\"17\" cy=\"17\" r=\"4.5\"/><path d=\"M12.5 17h9M17 12.5c-2 2.5-2 6.5 0 9M17 12.5c2 2.5 2 6.5 0 9\"/>", "hd": "<rect x=\"3\" y=\"4\" width=\"18\" height=\"16\" rx=\"4\"/><path d=\"M8 9v6M8 12h3M11 9v6M14 9h1.5a3 3 0 0 1 0 6H14z\"/>", "folder": "<path d=\"M3 7a2 2 0 0 1 2-2h4l2 2.5h8a2 2 0 0 1 2 2V17a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\"/>", "code": "<path d=\"M8 7l-5 5 5 5M16 7l5 5-5 5M14 5l-4 14\"/>", "db": "<ellipse cx=\"12\" cy=\"6\" rx=\"8\" ry=\"3\"/><path d=\"M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3\"/>", "refresh": "<path d=\"M20 11a8 8 0 0 0-14.5-4M4 4v4h4M4 13a8 8 0 0 0 14.5 4M20 20v-4h-4\"/>"};
-const ID={"hero": "Unduh<br>Video <b>Favoritmu</b>", "Download Your Favorite Videos": "Unduh Video Favoritmu", "Paste the video link below and start downloading in seconds.": "Tempel link video di bawah dan mulai mengunduh dalam hitungan detik.", "Download": "Unduh", "📋 Paste": "📋 Tempel", "🗑 Clear": "🗑 Hapus", "Paste video link here...": "Tempel link video di sini...", "Home": "Beranda", "History": "Riwayat", "Profile": "Profil", "Fast Download": "Unduhan Cepat", "Direct from the source": "Langsung dari sumber", "HD Quality": "Kualitas HD", "Best quality available": "Kualitas terbaik tersedia", "No Watermark": "Tanpa Watermark", "As available": "Jika tersedia", "Works on All Devices": "Semua Perangkat", "Phone, tablet, desktop": "HP, tablet, desktop", "Downloading...": "Mengunduh...", "Speed": "Kecepatan", "Time remaining": "Sisa waktu", "Quality": "Kualitas", "✕ Cancel": "✕ Batal", "No active download.": "Belum ada unduhan.", "Paste a link on Home to start.": "Tempel link di Beranda untuk mulai.", "Go to Home": "Ke Beranda", "Complete!": "Selesai!", "Your video has been downloaded successfully.": "Videomu berhasil diunduh.", "📂 Open File": "📂 Buka File", "💾 Save to Device": "💾 Simpan ke Perangkat", "⬇ Download Again": "⬇ Unduh Lagi", "All": "Semua", "Videos": "Video", "Audios": "Audio", "Images": "Gambar", "Favorites": "Favorit", "Clear history": "Hapus riwayat", "Downloads": "Unduhan", "Settings": "Pengaturan", "About": "Tentang", "Help & Support": "Bantuan & Dukungan", "Log Out": "Keluar", "Appearance": "Tampilan", "Dark Mode": "Mode Gelap", "Language": "Bahasa", "Download Settings": "Pengaturan Unduhan", "Default Quality": "Kualitas Default", "Save Location": "Lokasi Simpan", "App Info": "Info Aplikasi", "Version": "Versi", "Clear Cache": "Hapus Cache", "Reset to Default": "Atur Ulang", "Best available": "Terbaik tersedia", "Edit profile": "Edit profil", "Pick an avatar or use your own photo.": "Pilih avatar atau pakai fotomu sendiri.", "Name": "Nama", "Cancel": "Batal", "Save": "Simpan", "Close": "Tutup", "About NecroDL": "Tentang NecroDL", "NecroDL is a simple, free video downloader. Paste a link, tap Download, and the file is saved to your device.": "NecroDL adalah pengunduh video yang simpel dan gratis. Tempel link, tekan Unduh, dan file tersimpan di perangkatmu.", "It works with TikTok, YouTube, Instagram, X, Facebook, Pinterest, Spotify, SoundCloud, Reddit and more. Your history stays on this device only.": "Bisa dipakai untuk TikTok, YouTube, Instagram, X, Facebook, Pinterest, Spotify, SoundCloud, Reddit, dan lainnya. Riwayatmu hanya tersimpan di perangkat ini.", "Please download only content you own or have permission to save.": "Unduh hanya konten milikmu atau yang kamu punya izin menyimpannya.", "Made by": "Dibuat oleh", "Help & Support ": "Bantuan & Dukungan", "Hi, I'm kaltzy404. Is a link not downloading, something looks off, or do you have an idea for NecroDL? Send me a message and I'll help.": "Halo, aku kaltzy404. Link tidak bisa diunduh, ada yang terlihat aneh, atau punya ide untuk NecroDL? Kirim pesan, aku bantu.", "It helps if you include the link you tried and what you saw on screen.": "Akan membantu kalau kamu menyertakan link yang dicoba dan apa yang tampil di layar.", "Chat on WhatsApp": "Chat lewat WhatsApp", "Chat on Telegram": "Chat lewat Telegram", "Save Location ": "Lokasi Simpan", "Files are saved to your browser's default Downloads folder. To choose another folder, turn on \"Ask where to save files\" in your browser's download settings.": "File disimpan ke folder Unduhan bawaan browser. Untuk memilih folder lain, aktifkan \"Tanyakan lokasi simpan file\" di pengaturan unduhan browser.", "Clear saved history? Your profile and settings stay.":"Hapus riwayat tersimpan? Profil dan pengaturanmu tetap ada.","Paste a video link first.": "Tempel link video dulu.", "Looking up your media...": "Mencari media...", "Your clipboard is empty. Copy a video link first.": "Clipboard kosong. Salin link video dulu.", "Can't read the clipboard. Long-press the field and choose Paste.": "Clipboard tidak bisa dibaca. Tekan lama kolom ini lalu pilih Tempel."};
+let curUrl="";
+const ICONS={"dl":'<path d="M12 4v11M8 11l4 4 4-4M5 16v3h14v-3"/>',"trash":'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v6M14 11v6"/>',"save":'<path d="M5 4h11l3 3v13H5zM8 4v5h7V4M8 20v-6h8v6"/>',"x":'<path d="M6 6l12 12M18 6L6 18"/>',"star":'<path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 17l-5.2 2.7 1-5.9-4.3-4.1 5.9-.8z"/>',"check":'<path d="M5 12.5l4.5 4.5L19 7.5"/>',"left":'<path d="M15 5l-7 7 7 7"/>',"paste":'<rect x="6" y="5" width="12" height="16" rx="2"/><path d="M9 5V3h6v2M9 11h6M9 15h4"/>',"cam":'<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>',"music":'<path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/>',"clock": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v5l3 2\"/>", "pencil": "<path d=\"M4 20h4L19 9l-4-4L4 16z\"/><path d=\"M13.5 6.5l4 4\"/>", "gear": "<circle cx=\"12\" cy=\"12\" r=\"3\"/><path d=\"M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z\"/>", "info": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 11v6M12 7.5v.5\"/>", "help": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17v.5\"/>", "out": "<path d=\"M9 4H5v16h4M16 8l4 4-4 4M20 12H9\"/>", "chev": "<path d=\"M9 5l7 7-7 7\"/>", "down": "<path d=\"M5 9l7 7 7-7\"/>", "back": "<path d=\"M19 12H5M11 6l-6 6 6 6\"/>", "dark": "<circle cx=\"12\" cy=\"12\" r=\"8\"/><path d=\"M12 4a8 8 0 0 0 0 16z\" fill=\"currentColor\"/>", "lang": "<circle cx=\"9\" cy=\"8\" r=\"3.5\"/><path d=\"M3 20c0-3.5 2.5-5.5 6-5.5\"/><circle cx=\"17\" cy=\"17\" r=\"4.5\"/><path d=\"M12.5 17h9M17 12.5c-2 2.5-2 6.5 0 9M17 12.5c2 2.5 2 6.5 0 9\"/>", "hd": "<rect x=\"3\" y=\"4\" width=\"18\" height=\"16\" rx=\"4\"/><path d=\"M8 9v6M8 12h3M11 9v6M14 9h1.5a3 3 0 0 1 0 6H14z\"/>", "folder": "<path d=\"M3 7a2 2 0 0 1 2-2h4l2 2.5h8a2 2 0 0 1 2 2V17a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\"/>", "code": "<path d=\"M8 7l-5 5 5 5M16 7l5 5-5 5M14 5l-4 14\"/>", "db": "<ellipse cx=\"12\" cy=\"6\" rx=\"8\" ry=\"3\"/><path d=\"M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3\"/>", "refresh": "<path d=\"M20 11a8 8 0 0 0-14.5-4M4 4v4h4M4 13a8 8 0 0 0 14.5 4M20 20v-4h-4\"/>"};
+const ID={"hero": "Unduh<br>Video <b>Favoritmu</b>", "Download Your Favorite Videos": "Unduh Video Favoritmu", "Paste the video link below and start downloading in seconds.": "Tempel link video di bawah dan mulai mengunduh dalam hitungan detik.", "Download": "Unduh", "Paste":"Tempel","Clear":"Hapus", "Paste video link here...": "Tempel link video di sini...", "Home": "Beranda", "History": "Riwayat", "Profile": "Profil", "Fast Download": "Unduhan Cepat", "Direct from the source": "Langsung dari sumber", "HD Quality": "Kualitas HD", "Best quality available": "Kualitas terbaik tersedia", "No Watermark": "Tanpa Watermark", "As available": "Jika tersedia", "Works on All Devices": "Semua Perangkat", "Phone, tablet, desktop": "HP, tablet, desktop", "Downloading...": "Mengunduh...", "Speed": "Kecepatan", "Time remaining": "Sisa waktu", "Quality": "Kualitas", "No active download.": "Belum ada unduhan.", "Paste a link on Home to start.": "Tempel link di Beranda untuk mulai.", "Go to Home": "Ke Beranda", "Complete!": "Selesai!", "Your video has been downloaded successfully.": "Videomu berhasil diunduh.", "Save to Device":"Simpan ke Perangkat","Download Again":"Unduh Lagi","Download MP3":"Unduh MP3","No audio found for this link.":"Audio untuk link ini tidak ditemukan.","Image Preview":"Pratinjau Gambar","Download This Image":"Unduh Gambar Ini","Download All":"Unduh Semua","Image":"Gambar","of":"dari","saved":"tersimpan", "All": "Semua", "Videos": "Video", "Audios": "Audio", "Images": "Gambar", "Favorites": "Favorit", "Clear history": "Hapus riwayat", "Downloads": "Unduhan", "Settings": "Pengaturan", "About": "Tentang", "Help & Support": "Bantuan & Dukungan", "Log Out": "Keluar", "Appearance": "Tampilan", "Dark Mode": "Mode Gelap", "Language": "Bahasa", "Download Settings": "Pengaturan Unduhan", "Default Quality": "Kualitas Default", "Save Location": "Lokasi Simpan", "App Info": "Info Aplikasi", "Version": "Versi", "Clear Cache": "Hapus Cache", "Reset to Default": "Atur Ulang", "Best available": "Terbaik tersedia", "Edit profile": "Edit profil", "Pick an avatar or use your own photo.": "Pilih avatar atau pakai fotomu sendiri.", "Name": "Nama", "Cancel": "Batal", "Save": "Simpan", "Close": "Tutup", "About NecroDL": "Tentang NecroDL", "NecroDL is a simple, free video downloader. Paste a link, tap Download, and the file is saved to your device.": "NecroDL adalah pengunduh video yang simpel dan gratis. Tempel link, tekan Unduh, dan file tersimpan di perangkatmu.", "It works with TikTok, YouTube, Instagram, X, Facebook, Pinterest, Spotify, SoundCloud, Reddit and more. Your history stays on this device only.": "Bisa dipakai untuk TikTok, YouTube, Instagram, X, Facebook, Pinterest, Spotify, SoundCloud, Reddit, dan lainnya. Riwayatmu hanya tersimpan di perangkat ini.", "Please download only content you own or have permission to save.": "Unduh hanya konten milikmu atau yang kamu punya izin menyimpannya.", "Made by": "Dibuat oleh", "Help & Support ": "Bantuan & Dukungan", "Hi, I'm kaltzy404. Is a link not downloading, something looks off, or do you have an idea for NecroDL? Send me a message and I'll help.": "Halo, aku kaltzy404. Link tidak bisa diunduh, ada yang terlihat aneh, atau punya ide untuk NecroDL? Kirim pesan, aku bantu.", "It helps if you include the link you tried and what you saw on screen.": "Akan membantu kalau kamu menyertakan link yang dicoba dan apa yang tampil di layar.", "Chat on WhatsApp": "Chat lewat WhatsApp", "Chat on Telegram": "Chat lewat Telegram", "Save Location ": "Lokasi Simpan", "Files are saved to your browser's default Downloads folder. To choose another folder, turn on \"Ask where to save files\" in your browser's download settings.": "File disimpan ke folder Unduhan bawaan browser. Untuk memilih folder lain, aktifkan \"Tanyakan lokasi simpan file\" di pengaturan unduhan browser.", "Clear saved history? Your profile and settings stay.":"Hapus riwayat tersimpan? Profil dan pengaturanmu tetap ada.","Paste a video link first.": "Tempel link video dulu.", "Looking up your media...": "Mencari media...", "Your clipboard is empty. Copy a video link first.": "Clipboard kosong. Salin link video dulu.", "Can't read the clipboard. Long-press the field and choose Paste.": "Clipboard tidak bisa dibaca. Tekan lama kolom ini lalu pilih Tempel."};
 $$("[data-i]").forEach(e=>e.innerHTML='<svg class="mi" viewBox="0 0 24 24" aria-hidden="true">'+(e.dataset.i==="chev"?ICONS.chev:ICONS[e.dataset.i])+'</svg>');
+const ic=(n,f)=>'<svg class="mi" viewBox="0 0 24 24" aria-hidden="true"'+(f?' style="fill:currentColor"':"")+">"+ICONS[n]+"</svg>";
 const T=s=>cfg.lang==="id"&&ID[s]||s;
 const QN={best:"Best available","720":"HD (720p)","480":"SD (480p)",mp3:"Audio (MP3)"};
 function applyLang(){const id=cfg.lang==="id",w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);let n;
@@ -192,12 +208,12 @@ function applyLang(){const id=cfg.lang==="id",w=document.createTreeWalker(docume
  $$("[placeholder]").forEach(e=>{e._p=e._p||e.placeholder;e.placeholder=id&&ID[e._p]||e._p});
  $$("[data-k]").forEach(e=>{e._h=e._h||e.innerHTML;const nv=id?ID[e.dataset.k]:e._h;if(e._c!==nv){e.innerHTML=nv;e._c=nv}})}
 let _q=0;new MutationObserver(()=>{if(!_q){_q=1;requestAnimationFrame(()=>{_q=0;applyLang()})}}).observe(document.body,{childList:true,subtree:true});
-function show(id){$$(".screen").forEach(s=>s.classList.toggle("on",s.id===id));const tab={progress:"dl",idle:"dl",done:"dl",settings:"profile"}[id]||id;$$("#nav button").forEach(b=>b.classList.toggle("on",b.dataset.go===tab));$("main").scrollTop=0;if(id==="history")drawHist();if(id==="profile")drawProfile();if(id==="settings")$("#cacheV").textContent=fmt(Math.max(1,(localStorage.getItem("necrodl_hist")||"").length))}
+function show(id){$$(".screen").forEach(s=>s.classList.toggle("on",s.id===id));const tab={progress:"dl",idle:"dl",done:"dl",settings:"profile",gallery:"home"}[id]||id;$$("#nav button").forEach(b=>b.classList.toggle("on",b.dataset.go===tab));$("main").scrollTop=0;if(id==="history")drawHist();if(id==="profile")drawProfile();if(id==="settings")$("#cacheV").textContent=fmt(Math.max(1,(localStorage.getItem("necrodl_hist")||"").length))}
 document.addEventListener("click",e=>{const g=e.target.closest("[data-go]");if(!g)return;const t=g.dataset.go;show(t==="dl"?(job?"progress":last&&blob?"done":"idle"):t)});
 
 function applyCfg(){document.documentElement.dataset.theme=cfg.light?"light":"dark";$("#sw").classList.toggle("on",!cfg.light);$("#langV").textContent=cfg.lang==="id"?"Bahasa Indonesia":"English";$("#qualV").textContent=QN[cfg.q||"best"];store.set("necrodl_cfg",cfg);applyLang()}
-$("#theme").onclick=()=>{cfg.light=!cfg.light;applyCfg()};$("#lang").onclick=()=>openSheet(`<h2>Language</h2><div class="menu">${[["en","English"],["id","Bahasa Indonesia"]].map(([c,n])=>`<button data-l="${c}"><em>${n}</em>${(cfg.lang||"en")===c?"✓":""}</button>`).join("")}</div>`);
-$("#qual").onclick=()=>openSheet(`<h2>Default Quality</h2><div class="menu">${Object.entries(QN).map(([c,n])=>`<button data-q="${c}"><em>${n}</em>${(cfg.q||"best")===c?"✓":""}</button>`).join("")}</div>`);
+$("#theme").onclick=()=>{cfg.light=!cfg.light;applyCfg()};$("#lang").onclick=()=>openSheet(`<h2>Language</h2><div class="menu">${[["en","English"],["id","Bahasa Indonesia"]].map(([c,n])=>`<button data-l="${c}"><em>${n}</em>${(cfg.lang||"en")===c?ic("check"):""}</button>`).join("")}</div>`);
+$("#qual").onclick=()=>openSheet(`<h2>Default Quality</h2><div class="menu">${Object.entries(QN).map(([c,n])=>`<button data-q="${c}"><em>${n}</em>${(cfg.q||"best")===c?ic("check"):""}</button>`).join("")}</div>`);
 $("#loc").onclick=()=>openSheet(`<h2>Save Location</h2><p>Files are saved to your browser's default Downloads folder. To choose another folder, turn on "Ask where to save files" in your browser's download settings.</p><button class="btn y" onclick="closeSheet()" style="width:100%">Close</button>`);
 $("#cache").onclick=()=>{if(confirm(T("Clear saved history? Your profile and settings stay."))){hist=[];persist();show("settings")}};
 $("#sheet").addEventListener("click",e=>{const b=e.target.closest("[data-l],[data-q]");if(!b)return;if(b.dataset.l)cfg.lang=b.dataset.l;if(b.dataset.q)cfg.q=b.dataset.q;applyCfg();closeSheet()});
@@ -205,11 +221,7 @@ $("#reset").onclick=()=>{cfg={light:false,q:"best",lang:"en",total:cfg.total};ap
 $("#about").onclick=()=>openSheet(`<h2>About NecroDL</h2><p>NecroDL is a simple, free video downloader. Paste a link, tap Download, and the file is saved to your device.</p><p>It works with TikTok, YouTube, Instagram, X, Facebook, Pinterest, Spotify, SoundCloud, Reddit and more. Your history stays on this device only.</p><p>Please download only content you own or have permission to save.</p><div class="list" style="margin:14px 0"><div>Version <span>v1.0.0</span></div><div>Made by <span>kaltzy404</span></div></div><button class="btn y" onclick="closeSheet()" style="width:100%">Close</button>`);
 
 function say(t,cls=""){$("#status").innerHTML=t?`<div class="msg ${cls}" role="status">${esc(T(t))}</div>`:""}
-const syncClr=()=>{
-const icPaste='<svg class="ic" viewBox="0 0 24 24"><path d="M8 4h8v4H8z"/><path d="M6 8h12v12H6z"/></svg>';
-const icClear='<svg class="ic" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>';
-$("#clear").innerHTML=$("#url").value?icClear+"Clear":icPaste+"Paste";
-};
+const syncClr=()=>{$("#clear").innerHTML=$("#url").value?ic("trash")+"Clear":ic("paste")+"Paste"};
 $("#url").addEventListener("input",syncClr);
 $("#clear").onclick=async()=>{
  if($("#url").value){$("#url").value="";$("#found").innerHTML="";say("");syncClr();return}
@@ -224,8 +236,8 @@ $("#go").onclick=async()=>{
   const r=await fetch("/api/resolve",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({url,format:cfg.q==="mp3"?"mp3":"mp4"})});
   const d=await r.json().catch(()=>({message:"The server did not respond correctly."}));
   if(!d.ok)throw new Error(d.message||"Something went wrong.");
-  say("");const m=d.result,D=m.downloads,q=cfg.q||"best",o=q==="mp3"?D.find(x=>x.type==="audio"):q==="best"?D[0]:D.find(x=>String(x.quality).includes(q));if(o){start(m,o);return}
-  $("#found").innerHTML=`<div class="media" style="margin-top:16px"><img src="${esc(m.thumbnail)}" alt="" referrerpolicy="no-referrer" onerror="this.src='img/mascot.png'"><div><p>${esc(m.title)}</p><small>${esc(d.platform)}${m.author?" · "+esc(m.author):""}</small></div></div><div class="opts">${m.downloads.map((o,i)=>`<button class="opt" data-i="${i}"><span>${esc(o.type)}${o.format?" · "+esc(o.format):""}</span><em>${esc(o.quality||"Download")} ⬇</em></button>`).join("")}</div>`;
+  say("");const m=d.result,D=m.downloads,q=cfg.q||"best",o=q==="mp3"?D.find(x=>x.type==="audio"):q==="best"?D[0]:D.find(x=>String(x.quality).includes(q));curUrl=url;if(D.length&&D.every(x=>x.type==="image")){openGallery(m,D);return}if(o){start(m,o);return}
+  $("#found").innerHTML=`<div class="media" style="margin-top:16px"><img src="${esc(m.thumbnail)}" alt="" referrerpolicy="no-referrer" onerror="this.src='img/mascot.png'"><div><p>${esc(m.title)}</p><small>${esc(d.platform)}${m.author?" · "+esc(m.author):""}</small></div></div><div class="opts">${m.downloads.map((o,i)=>`<button class="opt" data-i="${i}"><span>${esc(o.type)}${o.format?" · "+esc(o.format):""}</span><em>${esc(o.quality||"Download")}${ic("dl")}</em></button>`).join("")}</div>`;
   $$("#found .opt").forEach(b=>b.onclick=()=>start(m,m.downloads[b.dataset.i]));
  }catch(e){say(e.message)}finally{$("#go").disabled=false}
 };
@@ -233,30 +245,21 @@ $("#go").onclick=async()=>{
 async function start(m,o){
  if(job)job.ctl.abort();
  const ext=o.type==="audio"?"mp3":o.type==="image"?"jpg":"mp4",name=(m.title.replace(/[\\/:*?"<>|]+/g,"").slice(0,80).trim()||"necrodl")+"."+ext;
- job={ctl:new AbortController()};last={m,o,name};blob=null;
+ job={ctl:new AbortController()};last={m,o,name,url:curUrl};blob=null;
  $("#pThumb").src=m.thumbnail||"img/mascot.png";$("#pTitle").textContent=name;$("#pMeta").textContent=o.quality||o.type;$("#pQ").textContent=o.quality||"-";
  $("#pct").textContent="0%";$("#ring").style.setProperty("--p",0);$("#ring").classList.remove("ind");show("progress");
  try{
   const r=await fetch("/api/download?name="+encodeURIComponent(name)+"&url="+encodeURIComponent(o.url),{signal:job.ctl.signal});
   if(!r.ok||!r.body)throw new Error("proxy");
   const total=+r.headers.get("content-length")||0,rd=r.body.getReader(),parts=[],t0=performance.now();let got=0;
-  if(!total){
-$("#ring").classList.remove("ind");
-let fakeProgress=0;
-job.fakeTimer=setInterval(()=>{
-if(!job)return;
-fakeProgress=Math.min(fakeProgress+2,95);
-$("#pct").textContent=Math.floor(fakeProgress)+"%";
-$("#ring").style.setProperty("--p",fakeProgress);
-},150);
-}
+  if(!total)$("#ring").classList.add("ind");
   for(;;){const{done,value}=await rd.read();if(done)break;parts.push(value);got+=value.length;
    const sec=(performance.now()-t0)/1e3||1,sp=got/sec;$("#pSpeed").textContent=fmt(sp)+"/s";
    if(total){const p=Math.min(100,got/total*100);$("#pct").textContent=Math.floor(p)+"%";$("#ring").style.setProperty("--p",p);$("#pEta").textContent=clock((total-got)/sp);$("#pBytes").textContent=fmt(got)+" / "+fmt(total)}else{$("#pct").textContent="...";$("#pBytes").textContent=fmt(got)}}
   blob=new Blob(parts,{type:r.headers.get("content-type")||"application/octet-stream"});
-  last.size=blob.size;$("#pct").textContent="100%";$("#ring").style.setProperty("--p",100);if(job&&job.fakeTimer)clearInterval(job.fakeTimer);finish();
+  last.size=blob.size;finish();
  }catch(e){
-  if(e.name==="AbortError"){if(job&&job.fakeTimer)clearInterval(job.fakeTimer);job=null;show("idle");return}
+  if(e.name==="AbortError"){job=null;show("idle");return}
   job=null;blob=null;last.size=0;window.open(o.url,"_blank","noopener");finish(true);
  }
 }
@@ -264,18 +267,38 @@ function finish(direct){
  job=null;const{m,o,name,size}=last;cfg.total=(cfg.total||0)+1;store.set("necrodl_cfg",cfg);
  hist.unshift({title:name,thumb:m.thumbnail,type:o.type,quality:o.quality,size,ts:Date.now(),url:o.url,m,o});hist=hist.slice(0,60);persist();
  $("#dThumb").src=m.thumbnail||"img/mascot.png";$("#dTitle").textContent=name;$("#dMeta").textContent=(size?fmt(size)+" · ":"")+(o.quality||o.type);
- $("#open").style.display=$("#save").style.display=blob?"":"none";show("done");
+ $("#save").style.display=blob?"":"none";$("#mp3btn").style.display=o.type==="audio"?"none":"";show("done");
  if(blob)saveFile();else $("#dMeta").textContent="Opened in a new tab. Use your browser's save option there.";
 }
 function saveFile(){if(!blob)return;const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=last.name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),6e4)}
-$("#save").onclick=saveFile;$("#open").onclick=()=>blob&&window.open(URL.createObjectURL(blob),"_blank");
+$("#save").onclick=saveFile;
+$("#mp3btn").onclick=async()=>{const{m,url}=last,B=$("#mp3btn");let a=m.downloads.find(x=>x.type==="audio");
+ if(!a&&url){B.disabled=true;try{const r=await fetch("/api/resolve",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({url,format:"mp3"})}),d=await r.json();if(d.ok)a=d.result.downloads.find(x=>x.type==="audio")||(d.platform==="youtube"?d.result.downloads[0]:null)}catch{}B.disabled=false}
+ if(!a)return void($("#dMeta").textContent=T("No audio found for this link."));
+ a={...a,type:"audio"};start({...m,downloads:[a]},a)};
 $("#again").onclick=()=>last&&start(last.m,last.o);$("#cancel").onclick=()=>job&&job.ctl.abort();
 
+let G={m:null,list:[],i:0};
+function openGallery(m,list){G={m,list,i:0};$("#gTh").innerHTML=list.map((o,k)=>`<img src="${esc(o.url)}" data-k="${k}" alt="" referrerpolicy="no-referrer" loading="lazy">`).join("");$("#gAll").style.display=list.length>1?"":"none";show("gallery");gShow(0)}
+function gShow(k){const n=G.list.length;G.i=(k+n)%n;const o=G.list[G.i],im=$("#gImg");
+ im.onerror=()=>{im.onerror=null;im.src="/api/download?url="+encodeURIComponent(o.url)};
+ im.onload=()=>{$("#gRes").textContent=im.naturalWidth+" × "+im.naturalHeight};
+ $("#gRes").textContent="";im.src=o.url;$("#gCount").textContent=T("Image")+" "+(G.i+1)+" "+T("of")+" "+n;
+ $("#gAllT").textContent=T("Download All")+" ("+n+")";const th=$$("#gTh img");th.forEach((t,j)=>t.classList.toggle("on",j===G.i));th[G.i]&&th[G.i].scrollIntoView({inline:"center",block:"nearest"})}
+$("#gPrev").onclick=()=>gShow(G.i-1);$("#gNext").onclick=()=>gShow(G.i+1);$("#gBack").onclick=()=>show("home");
+$("#gTh").onclick=e=>{const t=e.target.closest("img");if(t)gShow(+t.dataset.k)};
+$("#gOne").onclick=()=>start(G.m,G.list[G.i]);
+$("#gAll").onclick=async()=>{const b=$("#gAll"),n=G.list.length,base=(G.m.title.replace(/[\\/:*?"<>|]+/g,"").slice(0,60).trim()||"necrodl");let ok=0;b.disabled=true;
+ for(let k=0;k<n;k++){$("#gAllT").textContent=T("Downloading...")+" "+(k+1)+"/"+n;
+  try{const r=await fetch("/api/download?name="+encodeURIComponent(base+" "+(k+1)+".jpg")+"&url="+encodeURIComponent(G.list[k].url));if(!r.ok)throw 0;const a=document.createElement("a");a.href=URL.createObjectURL(await r.blob());a.download=base+" "+(k+1)+".jpg";a.click();ok++;setTimeout(()=>URL.revokeObjectURL(a.href),6e4);await new Promise(f=>setTimeout(f,500))}catch{}}
+ b.disabled=false;gShow(G.i);
+ if(ok){hist.unshift({title:base+" ("+ok+")",thumb:G.list[0].url,type:"image",quality:ok+" images",size:0,ts:Date.now(),url:G.list[0].url,m:{title:base,thumbnail:G.list[0].url},o:G.list[0]});persist();cfg.total=(cfg.total||0)+ok;store.set("necrodl_cfg",cfg)}
+ $("#gCount").textContent=ok+"/"+n+" "+T("saved")};
 function drawHist(){
  const rows=hist.filter(h=>filter==="all"||(filter==="fav"?h.fav:h.type===filter));
- $("#hlist").innerHTML=rows.length?rows.map(h=>`<div class="hist"><img src="${esc(h.thumb||"img/mascot.png")}" alt="" referrerpolicy="no-referrer" onerror="this.src='img/mascot.png'"><div><p>${esc(h.title)}</p><small>${h.size?fmt(h.size)+" · ":""}${esc(h.quality||h.type)}<br>${new Date(h.ts).toLocaleString()}</small></div><button class="star" data-s="${h.ts}" aria-label="Favorite">${h.fav?"♥":"♡"}</button><button class="ico" data-t="${h.ts}" aria-label="Download again">⬇</button></div>`).join(""):`<div class="empty"><img class="pic" src="img/music.png" alt=""><p style="margin-top:10px">Nothing here yet.<br>Your downloads will show up in this list.</p></div>`;
+ $("#hlist").innerHTML=rows.length?rows.map(h=>`<div class="hist"><img src="${esc(h.thumb||"img/mascot.png")}" alt="" referrerpolicy="no-referrer" onerror="this.src='img/mascot.png'"><div><p>${esc(h.title)}</p><small>${h.size?fmt(h.size)+" · ":""}${esc(h.quality||h.type)}<br>${new Date(h.ts).toLocaleString()}</small></div><button class="star" data-s="${h.ts}" aria-label="Favorite">${ic("star",h.fav)}</button><button class="ico" data-t="${h.ts}" aria-label="Download again">${ic("dl")}</button></div>`).join(""):`<div class="empty"><img class="pic" src="img/music.png" alt=""><p style="margin-top:10px">Nothing here yet.<br>Your downloads will show up in this list.</p></div>`;
  $$("#hlist .star").forEach(b=>b.onclick=()=>{const h=hist.find(x=>x.ts==b.dataset.s);h.fav=!h.fav;persist();drawHist()});
- $$("#hlist .ico").forEach(b=>b.onclick=()=>{const h=hist.find(x=>x.ts==b.dataset.t);if(h){show("home");start(h.m,h.o)}});
+ $$("#hlist .ico").forEach(b=>b.onclick=()=>{const h=hist.find(x=>x.ts==b.dataset.t);if(h){show("home");curUrl="";start(h.m,h.o)}});
 }
 $("#tabs").onclick=e=>{const c=e.target.closest(".chip");if(!c)return;filter=c.dataset.f;$$(".chip").forEach(x=>x.classList.toggle("on",x===c));drawHist()};
 $("#wipe").onclick=()=>{if(hist.length&&confirm("Clear all history?")){hist=[];store.set("necrodl_hist",[]);drawHist()}};
@@ -286,7 +309,7 @@ function openSheet(x){$("#sheet").innerHTML=x;$("#ov").classList.add("on")}
 function closeSheet(){$("#ov").classList.remove("on")}
 function drawProfile(){$("#pAv").src=prof.av;$("#pName").textContent=prof.name;$("#sN").textContent=cfg.total||hist.length;$("#sH").textContent=hist.length;$("#sF").textContent=hist.filter(h=>h.fav).length}
 $("#editP").onclick=()=>{let av=prof.av;
- openSheet(`<h2>Edit profile</h2><p>Pick an avatar or use your own photo.</p><div class="av-opts" id="avo">${AVS.map(a=>`<img src="${a}" data-a="${a}" alt="" class="${a===av?"on":""}">`).join("")}<label class="ico" style="width:56px;height:56px;cursor:pointer"><svg class="ic" viewBox="0 0 24 24"><path d="M4 8h4l2-2h4l2 2h4v10H4z"/><circle cx="12" cy="13" r="3"/></svg><input type="file" accept="image/*" id="avf" hidden></label></div><label>Name<input class="inp" id="nm" maxlength="24" value="${esc(prof.name)}"></label><div class="row"><button class="btn" onclick="closeSheet()">Cancel</button><button class="btn y" id="sv">Save</button></div>`);
+ openSheet(`<h2>Edit profile</h2><p>Pick an avatar or use your own photo.</p><div class="av-opts" id="avo">${AVS.map(a=>`<img src="${a}" data-a="${a}" alt="" class="${a===av?"on":""}">`).join("")}<label class="ico" style="width:56px;height:56px;cursor:pointer">${ic("cam")}<input type="file" accept="image/*" id="avf" hidden></label></div><label>Name<input class="inp" id="nm" maxlength="24" value="${esc(prof.name)}"></label><div class="row"><button class="btn" onclick="closeSheet()">Cancel</button><button class="btn y" id="sv">Save</button></div>`);
  const mark=()=>$$("#avo img").forEach(i=>i.classList.toggle("on",i.dataset.a===av));
  $("#avo").onclick=e=>{const i=e.target.closest("img");if(i){av=i.dataset.a;mark()}};
  $("#avf").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const c=document.createElement("canvas");c.width=c.height=256;const s=Math.min(im.width,im.height);c.getContext("2d").drawImage(im,(im.width-s)/2,(im.height-s)/2,s,s,0,0,256,256);av=c.toDataURL("image/jpeg",.85);$("#avo").insertAdjacentHTML("afterbegin",`<img src="${av}" data-a="${av}" alt="">`);mark()};im.src=r.result};r.readAsDataURL(f)};
