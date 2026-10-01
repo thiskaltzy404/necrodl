@@ -70,21 +70,44 @@ nav button svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width
 nav button.on{color:var(--y);font-weight:700}
 #splash{position:fixed;inset:0;background:var(--bg);z-index:9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:opacity .4s}
 #splash img{width:170px;animation:pop .6s ease-out}#splash h1{font-size:44px}
-#splash i{width:46px;height:4px;border-radius:9px;background:var(--y);animation:load 1.1s ease-in-out infinite;margin-top:40px}
+.pbar{width:200px;height:6px;border-radius:9px;background:var(--line);margin-top:40px;overflow:hidden}#sbar{display:block;height:100%;width:0;background:var(--y)}
 @keyframes pop{from{transform:scale(.6);opacity:0}}@keyframes load{50%{width:110px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+img{mix-blend-mode:screen}[data-theme=light] img{mix-blend-mode:normal;border-radius:12px}
+.media img,.hist img,.avatar,.av-opts img{mix-blend-mode:normal}
+.avatar{width:110px;height:110px;border-radius:50%;object-fit:cover;background:#000;border:3px solid var(--y)}
+.stats.st3{display:flex;padding:14px 0}.stats.st3 div{flex:1;display:block;text-align:center;border:0}.stats.st3 b{display:block;font-size:20px}
+.star{font-size:22px;color:var(--y);padding:0 4px}.tabs{overflow-x:auto}.chip{white-space:nowrap}
+#ov{position:fixed;inset:0;background:#000a;display:none;align-items:flex-end;justify-content:center;z-index:8}#ov.on{display:flex}
+.sheet{width:100%;max-width:480px;background:var(--card);border-radius:20px 20px 0 0;padding:22px 20px calc(env(safe-area-inset-bottom) + 20px);max-height:88dvh;overflow:auto;border:1px solid var(--line)}
+.sheet h2{margin-bottom:10px}.sheet p{color:var(--mute);margin:8px 0}.sheet a.btn{text-decoration:none;color:var(--text);margin-top:10px}.sheet a.btn.y{color:var(--ink)}
+.av-opts{display:flex;gap:10px;margin:12px 0;flex-wrap:wrap}.av-opts img{width:56px;height:56px;border-radius:50%;object-fit:cover;background:#000;border:2px solid var(--line)}.av-opts img.on{border-color:var(--y)}
+.inp{width:100%;background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:13px;margin:6px 0 4px}
+.ic{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.bi{width:24px;height:24px;flex:none}
+.sheet a.btn{gap:10px}
+.mi{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+i[data-i]{display:flex;flex:none}
+.ph{display:flex;align-items:center;gap:12px;margin-bottom:16px}.ph h2{flex:1;font-size:22px}.ph button{color:var(--text);display:flex}
+.avatar{width:150px;height:150px;border:4px solid var(--line)}
+.nm{font-weight:800;font-size:22px;margin-top:6px}
+.card3{display:flex;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 0;margin:18px 0}.card3 div{flex:1;text-align:center;border-left:1px solid var(--line)}.card3 div:first-child{border:0}.card3 b{display:block;font-size:22px}.card3 span{color:var(--mute);font-size:13px}
+.menu{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.menu>*{display:flex;align-items:center;gap:14px;width:100%;padding:17px 16px;text-align:left;border-bottom:1px solid var(--line)}.menu>:last-child{border:0}
+.menu em{font-style:normal;flex:1}.menu span{color:var(--mute);font-size:14px}.menu i[data-i]:last-child svg{width:18px;height:18px;color:var(--mute)}
+h3.sec{border-left:4px solid var(--y);padding-left:10px;color:var(--text);font-size:18px;margin:26px 0 12px}
 </style>
 </head>
 <body>
-<div id="splash"><img src="img/mascot.png" alt=""><h1>Necro<b>DL</b></h1><p class="sub" style="margin:0">Download Your Favorite Videos</p><i></i></div>
+<div id="splash"><img src="img/mascot.png" alt=""><h1>Necro<b>DL</b></h1><p class="sub" style="margin:0">Download Your Favorite Videos</p><div class="pbar"><i id="sbar"></i></div><p class="sub" id="spct" style="margin:8px 0 0">Loading... 0%</p></div>
 <div class="app">
 <main>
  <section class="screen on" id="home">
   <div class="top"><img src="img/icon.png" alt="">NecroDL</div>
-  <h1>Download Your<br>Favorite <b>Videos</b></h1>
+  <h1 data-k="hero">Download Your<br>Favorite <b>Videos</b></h1>
   <p class="sub">Paste the video link below and start downloading in seconds.</p>
-  <div class="field"><span aria-hidden="true">🔗</span><input id="url" type="url" inputmode="url" placeholder="Paste video link here..." autocomplete="off" aria-label="Video link"></div>
-  <div class="row"><button class="btn y" id="go">⬇ Get links</button><button class="btn" id="clear">🗑 Clear</button></div>
+  <div class="field"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width:22px;height:22px"><path d="M10 14a4 4 0 0 0 5.66 0l3-3a4 4 0 0 0-5.66-5.66l-1 1"/><path d="M14 10a4 4 0 0 0-5.66 0l-3 3a4 4 0 0 0 5.66 5.66l1-1"/></svg><input id="url" type="url" inputmode="url" placeholder="Paste video link here..." autocomplete="off" aria-label="Video link"></div>
+  <div class="row"><button class="btn y" id="go"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M8 11l4 4 4-4M5 16v3h14v-3"/></svg>Download</button><button class="btn" id="clear">📋 Paste</button></div>
   <div id="status"></div><div id="found"></div>
   <div class="feats">
    <div class="feat"><b>Fast Download</b><span>Direct from the source</span></div>
@@ -120,23 +143,27 @@ nav button.on{color:var(--y);font-weight:700}
 
  <section class="screen" id="history">
   <h2>History</h2>
-  <div class="tabs" id="tabs"><button class="chip on" data-f="all">All</button><button class="chip" data-f="video">Videos</button><button class="chip" data-f="audio">Audios</button><button class="chip" data-f="image">Images</button></div>
+  <div class="tabs" id="tabs"><button class="chip on" data-f="all">All</button><button class="chip" data-f="video">Videos</button><button class="chip" data-f="audio">Audios</button><button class="chip" data-f="image">Images</button><button class="chip" data-f="fav">Favorites</button></div>
   <div id="hlist"></div>
   <button class="btn" id="wipe" style="width:100%;margin-top:6px">Clear history</button>
  </section>
 
  <section class="screen" id="profile">
-  <h2>Profile</h2>
-  <img class="avatar" src="img/mascot.png" alt=""><p class="center" style="font-weight:800;font-size:18px">NecroUser</p>
-  <div class="stats" style="margin-top:18px;display:flex;text-align:center"><div style="flex:1;display:block;border:0"><b id="sN">0</b><br><span>Downloads</span></div><div style="flex:1;display:block;border:0"><b id="sS">0 MB</b><br><span>Total size</span></div></div>
-  <div class="list"><button data-go="settings">Settings <span>›</span></button><button id="about">About <span>›</span></button></div>
+  <div class="ph"><i data-i="clock"></i><h2>Profile</h2><button id="editP" aria-label="Edit profile"><i data-i="pencil"></i></button></div>
+  <img class="avatar" id="pAv" alt="" style="display:block;margin:6px auto 12px"><p class="center nm" id="pName"></p>
+  <div class="card3"><div><b id="sN">0</b><span>Downloads</span></div><div><b id="sH">0</b><span>History</span></div><div><b id="sF">0</b><span>Favorites</span></div></div>
+  <div class="menu"><button data-go="settings"><i data-i="gear"></i><em>Settings</em><i data-i="chev"></i></button><button id="about"><i data-i="info"></i><em>About</em><i data-i="chev"></i></button><button id="help"><i data-i="help"></i><em>Help &amp; Support</em><i data-i="chev"></i></button><button id="logout"><i data-i="out"></i><em>Log Out</em><i data-i="chev"></i></button></div>
  </section>
 
  <section class="screen" id="settings">
-  <button data-go="profile" style="margin-bottom:10px">← Back</button><h2>Settings</h2>
-  <h3>Appearance</h3><div class="list"><button id="theme">Dark Mode <i class="sw on" id="sw"></i></button></div>
-  <h3>Download Settings</h3><div class="list"><label style="cursor:pointer">Prefer audio (MP3) for YouTube <input type="checkbox" id="mp3" style="accent-color:#ffd60a;width:20px;height:20px"></label></div>
-  <h3>App Info</h3><div class="list"><div>Version <span>v1.0.0</span></div><button id="reset">Reset to Default</button></div>
+  <div class="ph"><button data-go="profile" aria-label="Back"><i data-i="back"></i></button><h2>Settings</h2></div>
+  <h3 class="sec">Appearance</h3>
+  <div class="menu"><button id="theme"><i data-i="dark"></i><em>Dark Mode</em><i class="sw on" id="sw"></i></button><button id="lang"><i data-i="lang"></i><em>Language</em><span id="langV">English</span><i data-i="chev"></i></button></div>
+  <h3 class="sec">Download Settings</h3>
+  <div class="menu"><button id="qual"><i data-i="hd"></i><em>Default Quality</em><span id="qualV"></span><i data-i="down"></i></button><button id="loc"><i data-i="folder"></i><em>Save Location</em><span>Downloads</span><i data-i="chev"></i></button></div>
+  <h3 class="sec">App Info</h3>
+  <div class="menu"><div><i data-i="code"></i><em>Version</em><span>v1.0.0</span></div><button id="cache"><i data-i="db"></i><em>Clear Cache</em><span id="cacheV">0 KB</span></button></div>
+  <button class="btn" id="reset" style="width:100%;margin-top:22px"><i data-i="refresh"></i>Reset to Default</button>
  </section>
 </main>
 <nav id="nav">
@@ -146,6 +173,7 @@ nav button.on{color:var(--y);font-weight:700}
  <button data-go="profile"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>Profile</button>
 </nav>
 </div>
+<div id="ov" onclick="if(event.target===this)closeSheet()"><div class="sheet" id="sheet"></div></div>
 <script>
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const store={get:(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}},set:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch{}}};
@@ -154,16 +182,34 @@ const fmt=b=>b>=1e9?(b/1e9).toFixed(1)+" GB":b>=1e6?(b/1e6).toFixed(1)+" MB":Mat
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const clock=s=>isFinite(s)?[s/3600|0,(s/60|0)%60,Math.round(s%60)].map(n=>String(n).padStart(2,"0")).join(":"):"-";
 
-function show(id){$$(".screen").forEach(s=>s.classList.toggle("on",s.id===id));const tab={progress:"dl",idle:"dl",done:"dl",settings:"profile"}[id]||id;$$("#nav button").forEach(b=>b.classList.toggle("on",b.dataset.go===tab));$("main").scrollTop=0;if(id==="history")drawHist();if(id==="profile")drawProfile()}
+const ICONS={"clock": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v5l3 2\"/>", "pencil": "<path d=\"M4 20h4L19 9l-4-4L4 16z\"/><path d=\"M13.5 6.5l4 4\"/>", "gear": "<circle cx=\"12\" cy=\"12\" r=\"3\"/><path d=\"M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z\"/>", "info": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 11v6M12 7.5v.5\"/>", "help": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17v.5\"/>", "out": "<path d=\"M9 4H5v16h4M16 8l4 4-4 4M20 12H9\"/>", "chev": "<path d=\"M9 5l7 7-7 7\"/>", "down": "<path d=\"M5 9l7 7 7-7\"/>", "back": "<path d=\"M19 12H5M11 6l-6 6 6 6\"/>", "dark": "<circle cx=\"12\" cy=\"12\" r=\"8\"/><path d=\"M12 4a8 8 0 0 0 0 16z\" fill=\"currentColor\"/>", "lang": "<circle cx=\"9\" cy=\"8\" r=\"3.5\"/><path d=\"M3 20c0-3.5 2.5-5.5 6-5.5\"/><circle cx=\"17\" cy=\"17\" r=\"4.5\"/><path d=\"M12.5 17h9M17 12.5c-2 2.5-2 6.5 0 9M17 12.5c2 2.5 2 6.5 0 9\"/>", "hd": "<rect x=\"3\" y=\"4\" width=\"18\" height=\"16\" rx=\"4\"/><path d=\"M8 9v6M8 12h3M11 9v6M14 9h1.5a3 3 0 0 1 0 6H14z\"/>", "folder": "<path d=\"M3 7a2 2 0 0 1 2-2h4l2 2.5h8a2 2 0 0 1 2 2V17a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z\"/>", "code": "<path d=\"M8 7l-5 5 5 5M16 7l5 5-5 5M14 5l-4 14\"/>", "db": "<ellipse cx=\"12\" cy=\"6\" rx=\"8\" ry=\"3\"/><path d=\"M4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3\"/>", "refresh": "<path d=\"M20 11a8 8 0 0 0-14.5-4M4 4v4h4M4 13a8 8 0 0 0 14.5 4M20 20v-4h-4\"/>"};
+const ID={"hero": "Unduh<br>Video <b>Favoritmu</b>", "Download Your Favorite Videos": "Unduh Video Favoritmu", "Paste the video link below and start downloading in seconds.": "Tempel link video di bawah dan mulai mengunduh dalam hitungan detik.", "Download": "Unduh", "📋 Paste": "📋 Tempel", "🗑 Clear": "🗑 Hapus", "Paste video link here...": "Tempel link video di sini...", "Home": "Beranda", "History": "Riwayat", "Profile": "Profil", "Fast Download": "Unduhan Cepat", "Direct from the source": "Langsung dari sumber", "HD Quality": "Kualitas HD", "Best quality available": "Kualitas terbaik tersedia", "No Watermark": "Tanpa Watermark", "As available": "Jika tersedia", "Works on All Devices": "Semua Perangkat", "Phone, tablet, desktop": "HP, tablet, desktop", "Downloading...": "Mengunduh...", "Speed": "Kecepatan", "Time remaining": "Sisa waktu", "Quality": "Kualitas", "✕ Cancel": "✕ Batal", "No active download.": "Belum ada unduhan.", "Paste a link on Home to start.": "Tempel link di Beranda untuk mulai.", "Go to Home": "Ke Beranda", "Complete!": "Selesai!", "Your video has been downloaded successfully.": "Videomu berhasil diunduh.", "📂 Open File": "📂 Buka File", "💾 Save to Device": "💾 Simpan ke Perangkat", "⬇ Download Again": "⬇ Unduh Lagi", "All": "Semua", "Videos": "Video", "Audios": "Audio", "Images": "Gambar", "Favorites": "Favorit", "Clear history": "Hapus riwayat", "Downloads": "Unduhan", "Settings": "Pengaturan", "About": "Tentang", "Help & Support": "Bantuan & Dukungan", "Log Out": "Keluar", "Appearance": "Tampilan", "Dark Mode": "Mode Gelap", "Language": "Bahasa", "Download Settings": "Pengaturan Unduhan", "Default Quality": "Kualitas Default", "Save Location": "Lokasi Simpan", "App Info": "Info Aplikasi", "Version": "Versi", "Clear Cache": "Hapus Cache", "Reset to Default": "Atur Ulang", "Best available": "Terbaik tersedia", "Edit profile": "Edit profil", "Pick an avatar or use your own photo.": "Pilih avatar atau pakai fotomu sendiri.", "Name": "Nama", "Cancel": "Batal", "Save": "Simpan", "Close": "Tutup", "About NecroDL": "Tentang NecroDL", "NecroDL is a simple, free video downloader. Paste a link, tap Download, and the file is saved to your device.": "NecroDL adalah pengunduh video yang simpel dan gratis. Tempel link, tekan Unduh, dan file tersimpan di perangkatmu.", "It works with TikTok, YouTube, Instagram, X, Facebook, Pinterest, Spotify, SoundCloud, Reddit and more. Your history stays on this device only.": "Bisa dipakai untuk TikTok, YouTube, Instagram, X, Facebook, Pinterest, Spotify, SoundCloud, Reddit, dan lainnya. Riwayatmu hanya tersimpan di perangkat ini.", "Please download only content you own or have permission to save.": "Unduh hanya konten milikmu atau yang kamu punya izin menyimpannya.", "Made by": "Dibuat oleh", "Help & Support ": "Bantuan & Dukungan", "Hi, I'm kaltzy404. Is a link not downloading, something looks off, or do you have an idea for NecroDL? Send me a message and I'll help.": "Halo, aku kaltzy404. Link tidak bisa diunduh, ada yang terlihat aneh, atau punya ide untuk NecroDL? Kirim pesan, aku bantu.", "It helps if you include the link you tried and what you saw on screen.": "Akan membantu kalau kamu menyertakan link yang dicoba dan apa yang tampil di layar.", "Chat on WhatsApp": "Chat lewat WhatsApp", "Chat on Telegram": "Chat lewat Telegram", "Save Location ": "Lokasi Simpan", "Files are saved to your browser's default Downloads folder. To choose another folder, turn on \"Ask where to save files\" in your browser's download settings.": "File disimpan ke folder Unduhan bawaan browser. Untuk memilih folder lain, aktifkan \"Tanyakan lokasi simpan file\" di pengaturan unduhan browser.", "Clear saved history? Your profile and settings stay.":"Hapus riwayat tersimpan? Profil dan pengaturanmu tetap ada.","Paste a video link first.": "Tempel link video dulu.", "Looking up your media...": "Mencari media...", "Your clipboard is empty. Copy a video link first.": "Clipboard kosong. Salin link video dulu.", "Can't read the clipboard. Long-press the field and choose Paste.": "Clipboard tidak bisa dibaca. Tekan lama kolom ini lalu pilih Tempel."};
+$$("[data-i]").forEach(e=>e.innerHTML='<svg class="mi" viewBox="0 0 24 24" aria-hidden="true">'+(e.dataset.i==="chev"?ICONS.chev:ICONS[e.dataset.i])+'</svg>');
+const T=s=>cfg.lang==="id"&&ID[s]||s;
+const QN={best:"Best available","720":"HD (720p)","480":"SD (480p)",mp3:"Audio (MP3)"};
+function applyLang(){const id=cfg.lang==="id",w=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);let n;
+ while(n=w.nextNode()){const o=n._o||(n._o=n.nodeValue),k=o.trim();if(!k)continue;const v=id&&ID[k]||k;if(n.nodeValue!==o.replace(k,()=>v))n.nodeValue=o.replace(k,()=>v)}
+ $$("[placeholder]").forEach(e=>{e._p=e._p||e.placeholder;e.placeholder=id&&ID[e._p]||e._p});
+ $$("[data-k]").forEach(e=>{e._h=e._h||e.innerHTML;const nv=id?ID[e.dataset.k]:e._h;if(e._c!==nv){e.innerHTML=nv;e._c=nv}})}
+let _q=0;new MutationObserver(()=>{if(!_q){_q=1;requestAnimationFrame(()=>{_q=0;applyLang()})}}).observe(document.body,{childList:true,subtree:true});
+function show(id){$$(".screen").forEach(s=>s.classList.toggle("on",s.id===id));const tab={progress:"dl",idle:"dl",done:"dl",settings:"profile"}[id]||id;$$("#nav button").forEach(b=>b.classList.toggle("on",b.dataset.go===tab));$("main").scrollTop=0;if(id==="history")drawHist();if(id==="profile")drawProfile();if(id==="settings")$("#cacheV").textContent=fmt(Math.max(1,(localStorage.getItem("necrodl_hist")||"").length))}
 document.addEventListener("click",e=>{const g=e.target.closest("[data-go]");if(!g)return;const t=g.dataset.go;show(t==="dl"?(job?"progress":last&&blob?"done":"idle"):t)});
 
-function applyCfg(){document.documentElement.dataset.theme=cfg.light?"light":"dark";$("#sw").classList.toggle("on",!cfg.light);$("#mp3").checked=cfg.mp3;store.set("necrodl_cfg",cfg)}
-$("#theme").onclick=()=>{cfg.light=!cfg.light;applyCfg()};$("#mp3").onchange=e=>{cfg.mp3=e.target.checked;applyCfg()};
-$("#reset").onclick=()=>{cfg={light:false,mp3:false};applyCfg()};
-$("#about").onclick=()=>alert("NecroDL v1.0.0\nDownload only content you own or have permission to save.");
+function applyCfg(){document.documentElement.dataset.theme=cfg.light?"light":"dark";$("#sw").classList.toggle("on",!cfg.light);$("#langV").textContent=cfg.lang==="id"?"Bahasa Indonesia":"English";$("#qualV").textContent=QN[cfg.q||"best"];store.set("necrodl_cfg",cfg);applyLang()}
+$("#theme").onclick=()=>{cfg.light=!cfg.light;applyCfg()};$("#lang").onclick=()=>openSheet(`<h2>Language</h2><div class="menu">${[["en","English"],["id","Bahasa Indonesia"]].map(([c,n])=>`<button data-l="${c}"><em>${n}</em>${(cfg.lang||"en")===c?"✓":""}</button>`).join("")}</div>`);
+$("#qual").onclick=()=>openSheet(`<h2>Default Quality</h2><div class="menu">${Object.entries(QN).map(([c,n])=>`<button data-q="${c}"><em>${n}</em>${(cfg.q||"best")===c?"✓":""}</button>`).join("")}</div>`);
+$("#loc").onclick=()=>openSheet(`<h2>Save Location</h2><p>Files are saved to your browser's default Downloads folder. To choose another folder, turn on "Ask where to save files" in your browser's download settings.</p><button class="btn y" onclick="closeSheet()" style="width:100%">Close</button>`);
+$("#cache").onclick=()=>{if(confirm(T("Clear saved history? Your profile and settings stay."))){hist=[];persist();show("settings")}};
+$("#sheet").addEventListener("click",e=>{const b=e.target.closest("[data-l],[data-q]");if(!b)return;if(b.dataset.l)cfg.lang=b.dataset.l;if(b.dataset.q)cfg.q=b.dataset.q;applyCfg();closeSheet()});
+$("#reset").onclick=()=>{cfg={light:false,q:"best",lang:"en",total:cfg.total};applyCfg()};
+$("#about").onclick=()=>openSheet(`<h2>About NecroDL</h2><p>NecroDL is a simple, free video downloader. Paste a link, tap Download, and the file is saved to your device.</p><p>It works with TikTok, YouTube, Instagram, X, Facebook, Pinterest, Spotify, SoundCloud, Reddit and more. Your history stays on this device only.</p><p>Please download only content you own or have permission to save.</p><div class="list" style="margin:14px 0"><div>Version <span>v1.0.0</span></div><div>Made by <span>kaltzy404</span></div></div><button class="btn y" onclick="closeSheet()" style="width:100%">Close</button>`);
 
-function say(t,cls=""){$("#status").innerHTML=t?`<div class="msg ${cls}" role="status">${esc(t)}</div>`:""}
-$("#clear").onclick=()=>{$("#url").value="";$("#found").innerHTML="";say("");$("#url").focus()};
+function say(t,cls=""){$("#status").innerHTML=t?`<div class="msg ${cls}" role="status">${esc(T(t))}</div>`:""}
+const syncClr=()=>{$("#clear").textContent=$("#url").value?"🗑 Clear":"📋 Paste"};
+$("#url").addEventListener("input",syncClr);
+$("#clear").onclick=async()=>{
+ if($("#url").value){$("#url").value="";$("#found").innerHTML="";say("");syncClr();return}
+ try{const t=(await navigator.clipboard.readText()).trim();if(!t)return say("Your clipboard is empty. Copy a video link first.");$("#url").value=t;syncClr();say("")}catch{say("Can't read the clipboard. Long-press the field and choose Paste.");$("#url").focus()}};
 $("#url").addEventListener("keydown",e=>{if(e.key==="Enter")$("#go").click()});
 
 $("#go").onclick=async()=>{
@@ -171,10 +217,10 @@ $("#go").onclick=async()=>{
  if(!url)return say("Paste a video link first.");
  $("#go").disabled=true;say("Looking up your media...","info");
  try{
-  const r=await fetch("/api/resolve",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({url,format:cfg.mp3?"mp3":"mp4"})});
+  const r=await fetch("/api/resolve",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({url,format:cfg.q==="mp3"?"mp3":"mp4"})});
   const d=await r.json().catch(()=>({message:"The server did not respond correctly."}));
   if(!d.ok)throw new Error(d.message||"Something went wrong.");
-  say("");const m=d.result;
+  say("");const m=d.result,D=m.downloads,q=cfg.q||"best",o=q==="mp3"?D.find(x=>x.type==="audio"):q==="best"?D[0]:D.find(x=>String(x.quality).includes(q));if(o){start(m,o);return}
   $("#found").innerHTML=`<div class="media" style="margin-top:16px"><img src="${esc(m.thumbnail)}" alt="" referrerpolicy="no-referrer" onerror="this.src='img/mascot.png'"><div><p>${esc(m.title)}</p><small>${esc(d.platform)}${m.author?" · "+esc(m.author):""}</small></div></div><div class="opts">${m.downloads.map((o,i)=>`<button class="opt" data-i="${i}"><span>${esc(o.type)}${o.format?" · "+esc(o.format):""}</span><em>${esc(o.quality||"Download")} ⬇</em></button>`).join("")}</div>`;
   $$("#found .opt").forEach(b=>b.onclick=()=>start(m,m.downloads[b.dataset.i]));
  }catch(e){say(e.message)}finally{$("#go").disabled=false}
@@ -202,8 +248,8 @@ async function start(m,o){
  }
 }
 function finish(direct){
- job=null;const{m,o,name,size}=last;
- hist.unshift({title:name,thumb:m.thumbnail,type:o.type,quality:o.quality,size,ts:Date.now(),url:o.url,m,o});hist=hist.slice(0,60);store.set("necrodl_hist",hist.map(({m,o,...h})=>({...h,m:{title:m.title,thumbnail:m.thumbnail},o})));
+ job=null;const{m,o,name,size}=last;cfg.total=(cfg.total||0)+1;store.set("necrodl_cfg",cfg);
+ hist.unshift({title:name,thumb:m.thumbnail,type:o.type,quality:o.quality,size,ts:Date.now(),url:o.url,m,o});hist=hist.slice(0,60);persist();
  $("#dThumb").src=m.thumbnail||"img/mascot.png";$("#dTitle").textContent=name;$("#dMeta").textContent=(size?fmt(size)+" · ":"")+(o.quality||o.type);
  $("#open").style.display=$("#save").style.display=blob?"":"none";show("done");
  if(blob)saveFile();else $("#dMeta").textContent="Opened in a new tab. Use your browser's save option there.";
@@ -213,17 +259,33 @@ $("#save").onclick=saveFile;$("#open").onclick=()=>blob&&window.open(URL.createO
 $("#again").onclick=()=>last&&start(last.m,last.o);$("#cancel").onclick=()=>job&&job.ctl.abort();
 
 function drawHist(){
- const rows=hist.filter(h=>filter==="all"||h.type===filter);
- $("#hlist").innerHTML=rows.length?rows.map(h=>`<div class="hist"><img src="${esc(h.thumb||"img/mascot.png")}" alt="" referrerpolicy="no-referrer" onerror="this.src='img/mascot.png'"><div><p>${esc(h.title)}</p><small>${h.size?fmt(h.size)+" · ":""}${esc(h.quality||h.type)}<br>${new Date(h.ts).toLocaleString()}</small></div><button class="ico" data-t="${h.ts}" aria-label="Download again">⬇</button></div>`).join(""):`<div class="empty"><img class="pic" src="img/music.png" alt=""><p style="margin-top:10px">Nothing here yet.<br>Your downloads will show up in this list.</p></div>`;
+ const rows=hist.filter(h=>filter==="all"||(filter==="fav"?h.fav:h.type===filter));
+ $("#hlist").innerHTML=rows.length?rows.map(h=>`<div class="hist"><img src="${esc(h.thumb||"img/mascot.png")}" alt="" referrerpolicy="no-referrer" onerror="this.src='img/mascot.png'"><div><p>${esc(h.title)}</p><small>${h.size?fmt(h.size)+" · ":""}${esc(h.quality||h.type)}<br>${new Date(h.ts).toLocaleString()}</small></div><button class="star" data-s="${h.ts}" aria-label="Favorite">${h.fav?"★":"☆"}</button><button class="ico" data-t="${h.ts}" aria-label="Download again">⬇</button></div>`).join(""):`<div class="empty"><img class="pic" src="img/music.png" alt=""><p style="margin-top:10px">Nothing here yet.<br>Your downloads will show up in this list.</p></div>`;
+ $$("#hlist .star").forEach(b=>b.onclick=()=>{const h=hist.find(x=>x.ts==b.dataset.s);h.fav=!h.fav;persist();drawHist()});
  $$("#hlist .ico").forEach(b=>b.onclick=()=>{const h=hist.find(x=>x.ts==b.dataset.t);if(h){show("home");start(h.m,h.o)}});
 }
 $("#tabs").onclick=e=>{const c=e.target.closest(".chip");if(!c)return;filter=c.dataset.f;$$(".chip").forEach(x=>x.classList.toggle("on",x===c));drawHist()};
 $("#wipe").onclick=()=>{if(hist.length&&confirm("Clear all history?")){hist=[];store.set("necrodl_hist",[]);drawHist()}};
-function drawProfile(){$("#sN").textContent=hist.length;$("#sS").textContent=fmt(hist.reduce((a,h)=>a+(h.size||0),0))}
+const persist=()=>store.set("necrodl_hist",hist.map(({m,o,...h})=>({...h,m:{title:m.title,thumbnail:m.thumbnail},o})));
+let prof=store.get("necrodl_prof",{name:"NecroUser",av:"img/mascot.png"});
+const AVS=["img/mascot.png","img/happy.png","img/music.png","img/icon.png"];
+function openSheet(x){$("#sheet").innerHTML=x;$("#ov").classList.add("on")}
+function closeSheet(){$("#ov").classList.remove("on")}
+function drawProfile(){$("#pAv").src=prof.av;$("#pName").textContent=prof.name;$("#sN").textContent=cfg.total||hist.length;$("#sH").textContent=hist.length;$("#sF").textContent=hist.filter(h=>h.fav).length}
+$("#editP").onclick=()=>{let av=prof.av;
+ openSheet(`<h2>Edit profile</h2><p>Pick an avatar or use your own photo.</p><div class="av-opts" id="avo">${AVS.map(a=>`<img src="${a}" data-a="${a}" alt="" class="${a===av?"on":""}">`).join("")}<label class="ico" style="width:56px;height:56px;cursor:pointer">📷<input type="file" accept="image/*" id="avf" hidden></label></div><label>Name<input class="inp" id="nm" maxlength="24" value="${esc(prof.name)}"></label><div class="row"><button class="btn" onclick="closeSheet()">Cancel</button><button class="btn y" id="sv">Save</button></div>`);
+ const mark=()=>$$("#avo img").forEach(i=>i.classList.toggle("on",i.dataset.a===av));
+ $("#avo").onclick=e=>{const i=e.target.closest("img");if(i){av=i.dataset.a;mark()}};
+ $("#avf").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const c=document.createElement("canvas");c.width=c.height=256;const s=Math.min(im.width,im.height);c.getContext("2d").drawImage(im,(im.width-s)/2,(im.height-s)/2,s,s,0,0,256,256);av=c.toDataURL("image/jpeg",.85);$("#avo").insertAdjacentHTML("afterbegin",`<img src="${av}" data-a="${av}" alt="">`);mark()};im.src=r.result};r.readAsDataURL(f)};
+ $("#sv").onclick=()=>{prof={name:$("#nm").value.trim()||"NecroUser",av};store.set("necrodl_prof",prof);closeSheet();drawProfile()};
+};
+const WA="https://wa.me/6282283052880?text=Halo%20NecroDL,%20saya%20membutuhkan%20bantuan%20terkait%20website%20NecroDL.%20Mohon%20bantuannya.%20Terima%20kasih.";
+$("#help").onclick=()=>openSheet(`<h2>Help &amp; Support</h2><p>Hi, I'm kaltzy404. Is a link not downloading, something looks off, or do you have an idea for NecroDL? Send me a message and I'll help.</p><p>It helps if you include the link you tried and what you saw on screen.</p><a class="btn y" href="${WA}" target="_blank" rel="noopener"><svg class="bi" viewBox="0 0 24 24" aria-hidden="true"><rect width="24" height="24" rx="6" fill="#25D366"/><g transform="translate(3.6 3.6) scale(.7)"><path fill="#fff" d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></g></svg> Chat on WhatsApp</a><a class="btn" href="https://t.me/thiskaltzy" target="_blank" rel="noopener"><svg class="bi" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#fff"/><path fill="#27A7E7" d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg> Chat on Telegram</a><button class="btn" onclick="closeSheet()" style="width:100%;margin-top:10px">Close</button>`);
+$("#logout").onclick=()=>{if(confirm("Log out? This clears your profile, history and favorites on this device.")){prof={name:"NecroUser",av:"img/mascot.png"};hist=[];cfg.total=0;store.set("necrodl_prof",prof);persist();applyCfg();drawProfile();show("home")}};
 
 hist=hist.map(h=>({...h,m:h.m||{title:h.title,thumbnail:h.thumb},o:h.o||{url:h.url,type:h.type,quality:h.quality}}));
-applyCfg();
-setTimeout(()=>{const s=$("#splash");s.style.opacity=0;setTimeout(()=>s.remove(),400)},1100);
+applyCfg();syncClr();
+{let p=0;const t=setInterval(()=>{p=Math.min(100,p+Math.random()*9+3);$("#sbar").style.width=p+"%";$("#spct").textContent="Loading... "+Math.floor(p)+"%";if(p>=100){clearInterval(t);setTimeout(()=>{const s=$("#splash");s.style.opacity=0;setTimeout(()=>s.remove(),400)},250)}},110)}
 </script>
 </body>
 </html>
