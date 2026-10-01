@@ -107,7 +107,7 @@ h3.sec{border-left:4px solid var(--y);padding-left:10px;color:var(--text);font-s
   <h1 data-k="hero">Download Your<br>Favorite <b>Videos</b></h1>
   <p class="sub">Paste the video link below and start downloading in seconds.</p>
   <div class="field"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="width:22px;height:22px"><path d="M10 14a4 4 0 0 0 5.66 0l3-3a4 4 0 0 0-5.66-5.66l-1 1"/><path d="M14 10a4 4 0 0 0-5.66 0l-3 3a4 4 0 0 0 5.66 5.66l1-1"/></svg><input id="url" type="url" inputmode="url" placeholder="Paste video link here..." autocomplete="off" aria-label="Video link"></div>
-  <div class="row"><button class="btn y" id="go"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M8 11l4 4 4-4M5 16v3h14v-3"/></svg>Download</button><button class="btn" id="clear">📋 Paste</button></div>
+  <div class="row"><button class="btn y" id="go"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M8 11l4 4 4-4M5 16v3h14v-3"/></svg>Download</button><button class="btn" id="clear"><svg class="ic" viewBox="0 0 24 24"><path d="M8 4h8v4H8z"/><path d="M6 8h12v12H6z"/></svg>Paste</button></div>
   <div id="status"></div><div id="found"></div>
   <div class="feats">
    <div class="feat"><b>Fast Download</b><span>Direct from the source</span></div>
@@ -124,7 +124,7 @@ h3.sec{border-left:4px solid var(--y);padding-left:10px;color:var(--text);font-s
   <div class="ring" id="ring"><div id="pct">0%</div></div>
   <p class="center" style="font-weight:700">Downloading...</p><p class="center sub" id="pBytes" style="margin-top:2px"></p>
   <div class="stats"><div><span>Speed</span><b id="pSpeed">-</b></div><div><span>Time remaining</span><b id="pEta">-</b></div><div><span>Quality</span><b id="pQ">-</b></div></div>
-  <button class="btn" id="cancel" style="width:100%">✕ Cancel</button>
+  <button class="btn" id="cancel" style="width:100%"><svg class="ic" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>Cancel</button>
  </section>
 
  <section class="screen" id="idle">
@@ -138,7 +138,7 @@ h3.sec{border-left:4px solid var(--y);padding-left:10px;color:var(--text);font-s
   <h1 class="center" style="font-size:28px">Download <b>Complete!</b></h1>
   <p class="sub center">Your video has been downloaded successfully.</p>
   <div class="media" style="margin:18px 0 12px"><img id="dThumb" alt="" referrerpolicy="no-referrer"><div><p id="dTitle"></p><small id="dMeta"></small></div></div>
-  <div class="opts"><button class="btn y" id="open">📂 Open File</button><button class="btn" id="save">💾 Save to Device</button><button class="btn" id="again">⬇ Download Again</button></div>
+  <div class="opts"><button class="btn y" id="open"><svg class="ic" viewBox="0 0 24 24"><path d="M3 7h6l2 2h10v8a2 2 0 0 1-2 2H3z"/></svg>Open File</button><button class="btn" id="save"><svg class="ic" viewBox="0 0 24 24"><path d="M5 4h12l2 2v14H5z"/><path d="M8 4v6h8V4"/></svg>Save to Device</button><button class="btn" id="again"><svg class="ic" viewBox="0 0 24 24"><path d="M12 4v10M8 10l4 4 4-4"/><path d="M5 20h14"/></svg>Download Again</button></div>
  </section>
 
  <section class="screen" id="history">
@@ -205,7 +205,11 @@ $("#reset").onclick=()=>{cfg={light:false,q:"best",lang:"en",total:cfg.total};ap
 $("#about").onclick=()=>openSheet(`<h2>About NecroDL</h2><p>NecroDL is a simple, free video downloader. Paste a link, tap Download, and the file is saved to your device.</p><p>It works with TikTok, YouTube, Instagram, X, Facebook, Pinterest, Spotify, SoundCloud, Reddit and more. Your history stays on this device only.</p><p>Please download only content you own or have permission to save.</p><div class="list" style="margin:14px 0"><div>Version <span>v1.0.0</span></div><div>Made by <span>kaltzy404</span></div></div><button class="btn y" onclick="closeSheet()" style="width:100%">Close</button>`);
 
 function say(t,cls=""){$("#status").innerHTML=t?`<div class="msg ${cls}" role="status">${esc(T(t))}</div>`:""}
-const syncClr=()=>{$("#clear").textContent=$("#url").value?"🗑 Clear":"📋 Paste"};
+const syncClr=()=>{
+const icPaste='<svg class="ic" viewBox="0 0 24 24"><path d="M8 4h8v4H8z"/><path d="M6 8h12v12H6z"/></svg>';
+const icClear='<svg class="ic" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+$("#clear").innerHTML=$("#url").value?icClear+"Clear":icPaste+"Paste";
+};
 $("#url").addEventListener("input",syncClr);
 $("#clear").onclick=async()=>{
  if($("#url").value){$("#url").value="";$("#found").innerHTML="";say("");syncClr();return}
@@ -236,14 +240,23 @@ async function start(m,o){
   const r=await fetch("/api/download?name="+encodeURIComponent(name)+"&url="+encodeURIComponent(o.url),{signal:job.ctl.signal});
   if(!r.ok||!r.body)throw new Error("proxy");
   const total=+r.headers.get("content-length")||0,rd=r.body.getReader(),parts=[],t0=performance.now();let got=0;
-  if(!total)$("#ring").classList.add("ind");
+  if(!total){
+$("#ring").classList.remove("ind");
+let fakeProgress=0;
+job.fakeTimer=setInterval(()=>{
+if(!job)return;
+fakeProgress=Math.min(fakeProgress+2,95);
+$("#pct").textContent=Math.floor(fakeProgress)+"%";
+$("#ring").style.setProperty("--p",fakeProgress);
+},150);
+}
   for(;;){const{done,value}=await rd.read();if(done)break;parts.push(value);got+=value.length;
    const sec=(performance.now()-t0)/1e3||1,sp=got/sec;$("#pSpeed").textContent=fmt(sp)+"/s";
    if(total){const p=Math.min(100,got/total*100);$("#pct").textContent=Math.floor(p)+"%";$("#ring").style.setProperty("--p",p);$("#pEta").textContent=clock((total-got)/sp);$("#pBytes").textContent=fmt(got)+" / "+fmt(total)}else{$("#pct").textContent="...";$("#pBytes").textContent=fmt(got)}}
   blob=new Blob(parts,{type:r.headers.get("content-type")||"application/octet-stream"});
-  last.size=blob.size;finish();
+  last.size=blob.size;$("#pct").textContent="100%";$("#ring").style.setProperty("--p",100);if(job&&job.fakeTimer)clearInterval(job.fakeTimer);finish();
  }catch(e){
-  if(e.name==="AbortError"){job=null;show("idle");return}
+  if(e.name==="AbortError"){if(job&&job.fakeTimer)clearInterval(job.fakeTimer);job=null;show("idle");return}
   job=null;blob=null;last.size=0;window.open(o.url,"_blank","noopener");finish(true);
  }
 }
@@ -260,7 +273,7 @@ $("#again").onclick=()=>last&&start(last.m,last.o);$("#cancel").onclick=()=>job&
 
 function drawHist(){
  const rows=hist.filter(h=>filter==="all"||(filter==="fav"?h.fav:h.type===filter));
- $("#hlist").innerHTML=rows.length?rows.map(h=>`<div class="hist"><img src="${esc(h.thumb||"img/mascot.png")}" alt="" referrerpolicy="no-referrer" onerror="this.src='img/mascot.png'"><div><p>${esc(h.title)}</p><small>${h.size?fmt(h.size)+" · ":""}${esc(h.quality||h.type)}<br>${new Date(h.ts).toLocaleString()}</small></div><button class="star" data-s="${h.ts}" aria-label="Favorite">${h.fav?"★":"☆"}</button><button class="ico" data-t="${h.ts}" aria-label="Download again">⬇</button></div>`).join(""):`<div class="empty"><img class="pic" src="img/music.png" alt=""><p style="margin-top:10px">Nothing here yet.<br>Your downloads will show up in this list.</p></div>`;
+ $("#hlist").innerHTML=rows.length?rows.map(h=>`<div class="hist"><img src="${esc(h.thumb||"img/mascot.png")}" alt="" referrerpolicy="no-referrer" onerror="this.src='img/mascot.png'"><div><p>${esc(h.title)}</p><small>${h.size?fmt(h.size)+" · ":""}${esc(h.quality||h.type)}<br>${new Date(h.ts).toLocaleString()}</small></div><button class="star" data-s="${h.ts}" aria-label="Favorite">${h.fav?"♥":"♡"}</button><button class="ico" data-t="${h.ts}" aria-label="Download again">⬇</button></div>`).join(""):`<div class="empty"><img class="pic" src="img/music.png" alt=""><p style="margin-top:10px">Nothing here yet.<br>Your downloads will show up in this list.</p></div>`;
  $$("#hlist .star").forEach(b=>b.onclick=()=>{const h=hist.find(x=>x.ts==b.dataset.s);h.fav=!h.fav;persist();drawHist()});
  $$("#hlist .ico").forEach(b=>b.onclick=()=>{const h=hist.find(x=>x.ts==b.dataset.t);if(h){show("home");start(h.m,h.o)}});
 }
@@ -273,7 +286,7 @@ function openSheet(x){$("#sheet").innerHTML=x;$("#ov").classList.add("on")}
 function closeSheet(){$("#ov").classList.remove("on")}
 function drawProfile(){$("#pAv").src=prof.av;$("#pName").textContent=prof.name;$("#sN").textContent=cfg.total||hist.length;$("#sH").textContent=hist.length;$("#sF").textContent=hist.filter(h=>h.fav).length}
 $("#editP").onclick=()=>{let av=prof.av;
- openSheet(`<h2>Edit profile</h2><p>Pick an avatar or use your own photo.</p><div class="av-opts" id="avo">${AVS.map(a=>`<img src="${a}" data-a="${a}" alt="" class="${a===av?"on":""}">`).join("")}<label class="ico" style="width:56px;height:56px;cursor:pointer">📷<input type="file" accept="image/*" id="avf" hidden></label></div><label>Name<input class="inp" id="nm" maxlength="24" value="${esc(prof.name)}"></label><div class="row"><button class="btn" onclick="closeSheet()">Cancel</button><button class="btn y" id="sv">Save</button></div>`);
+ openSheet(`<h2>Edit profile</h2><p>Pick an avatar or use your own photo.</p><div class="av-opts" id="avo">${AVS.map(a=>`<img src="${a}" data-a="${a}" alt="" class="${a===av?"on":""}">`).join("")}<label class="ico" style="width:56px;height:56px;cursor:pointer"><svg class="ic" viewBox="0 0 24 24"><path d="M4 8h4l2-2h4l2 2h4v10H4z"/><circle cx="12" cy="13" r="3"/></svg><input type="file" accept="image/*" id="avf" hidden></label></div><label>Name<input class="inp" id="nm" maxlength="24" value="${esc(prof.name)}"></label><div class="row"><button class="btn" onclick="closeSheet()">Cancel</button><button class="btn y" id="sv">Save</button></div>`);
  const mark=()=>$$("#avo img").forEach(i=>i.classList.toggle("on",i.dataset.a===av));
  $("#avo").onclick=e=>{const i=e.target.closest("img");if(i){av=i.dataset.a;mark()}};
  $("#avf").onchange=e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const c=document.createElement("canvas");c.width=c.height=256;const s=Math.min(im.width,im.height);c.getContext("2d").drawImage(im,(im.width-s)/2,(im.height-s)/2,s,s,0,0,256,256);av=c.toDataURL("image/jpeg",.85);$("#avo").insertAdjacentHTML("afterbegin",`<img src="${av}" data-a="${av}" alt="">`);mark()};im.src=r.result};r.readAsDataURL(f)};
