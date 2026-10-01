@@ -1,5 +1,5 @@
 {
-  "functions": {
-    "api/*.js": { "maxDuration": 60 }
-  }
+  "installCommand": "npm install --omit=optional",
+  "functions": { "api/*.js": { "maxDuration": 60 } },
+  "rewrites": [{ "source": "/img/:file", "destination": "/:file" }]
 }
