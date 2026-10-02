@@ -272,10 +272,82 @@ function finish(direct){
 }
 function saveFile(){if(!blob)return;const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=last.name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),6e4)}
 $("#save").onclick=saveFile;
-$("#mp3btn").onclick=async()=>{const{m,url}=last,B=$("#mp3btn");let a=m.downloads.find(x=>x.type==="audio");
- if(!a&&url){B.disabled=true;try{const r=await fetch("/api/resolve",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({url,format:"mp3"})}),d=await r.json();if(d.ok)a=d.result.downloads.find(x=>x.type==="audio")||(d.platform==="youtube"?d.result.downloads[0]:null)}catch{}B.disabled=false}
- if(!a)return void($("#dMeta").textContent=T("No audio found for this link."));
- a={...a,type:"audio"};start({...m,downloads:[a]},a)};
+$("#mp3btn").onclick=async()=>{
+  const {m,url}=last;
+  const B=$("#mp3btn");
+
+  B.disabled=true;
+  B.innerHTML=ic("music")+" Converting MP3...";
+
+  try{
+    let a=m.downloads?.find(x=>x.type==="audio");
+
+    // Kalau audio URL belum tersedia, minta resolver mencarinya
+    if(!a&&url){
+      const r=await fetch("/api/resolve",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({
+          url,
+          format:"mp3"
+        })
+      });
+
+      const d=await r.json().catch(()=>null);
+
+      if(d?.ok){
+        a=d.result?.downloads?.find(x=>x.type==="audio");
+
+        // Fallback untuk resolver yang mengembalikan audio
+        // sebagai item pertama
+        if(!a && d.result?.downloads?.length){
+          a=d.result.downloads.find(x =>
+            x.type==="audio" ||
+            x.format==="mp3" ||
+            String(x.mime||"").includes("audio")
+          );
+        }
+      }
+    }
+
+    if(!a?.url){
+      throw new Error("No audio found for this link.");
+    }
+
+    /*
+      PENTING:
+      Jangan gunakan start() di sini.
+
+      start() memanggil /api/download.
+      Untuk MP3 kita harus memanggil /api/mp3.
+    */
+
+    const title=(m.title||"necrodl")
+      .replace(/[\\/:*?"<>|]+/g,"")
+      .slice(0,80)
+      .trim()||"necrodl";
+
+    const mp3Url="/api/mp3?"+
+      new URLSearchParams({
+        url:a.url,
+        name:title+".mp3"
+      }).toString();
+
+    // Download MP3 melalui backend FFmpeg
+    window.location.href=mp3Url;
+
+  }catch(e){
+    console.error("[NecroDL MP3]",e);
+    $("#dMeta").textContent=T(
+      e.message==="No audio found for this link."
+        ?"No audio found for this link."
+        :"MP3 download failed."
+    );
+  }finally{
+    B.disabled=false;
+    B.innerHTML=ic("music")+" Download MP3";
+  }
+};
 $("#again").onclick=()=>last&&start(last.m,last.o);$("#cancel").onclick=()=>job&&job.ctl.abort();
 
 let G={m:null,list:[],i:0};
