@@ -1,5 +1,10 @@
 {
   "installCommand": "npm install --omit=optional",
-  "functions": { "api/*.js": { "maxDuration": 60 } },
+  "functions": {
+    "api/*.js": {
+      "maxDuration": 60,
+      "includeFiles": "node_modules/ffmpeg-static/**"
+    }
+  },
   "rewrites": [{ "source": "/img/:file", "destination": "/:file" }]
 }
