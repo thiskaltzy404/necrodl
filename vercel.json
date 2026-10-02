@@ -1,10 +1,20 @@
 {
-  "installCommand": "npm install --omit=optional",
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "functions": {
-    "api/*.js": {
-      "maxDuration": 60,
-      "includeFiles": "node_modules/ffmpeg-static/**"
+    "api/mp3.js": {
+      "maxDuration": 300,
+      "supportsCancellation": true,
+      "includeFiles": [
+        "node_modules/ffmpeg-static/**"
+      ]
+    },
+    "api/download.js": {
+      "maxDuration": 300,
+      "supportsCancellation": true
+    },
+    "api/resolve.js": {
+      "maxDuration": 300,
+      "supportsCancellation": true
     }
-  },
-  "rewrites": [{ "source": "/img/:file", "destination": "/:file" }]
+  }
 }
