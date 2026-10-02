@@ -4,6 +4,7 @@
   "private": true,
   "engines": { "node": ">=18" },
   "dependencies": {
-    "@coflyn/scrapr": "github:coflyn/scrapr"
+    "@coflyn/scrapr": "github:coflyn/scrapr",
+    "ffmpeg-static": "^5.2.0"
   }
 }
