@@ -17,7 +17,7 @@ button,input{font:inherit;color:inherit}
 button{cursor:pointer;background:none;border:0}
 :focus-visible{outline:2px solid var(--y);outline-offset:2px}
 .app{width:100%;max-width:480px;height:100dvh;display:flex;flex-direction:column;position:relative;overflow:hidden}
-main{flex:1;overflow-y:auto;padding:calc(env(safe-area-inset-top) + 18px) 20px 24px}
+main{flex:1;overflow-y:auto;padding:calc(env(safe-area-inset-top) + 18px) 20px calc(env(safe-area-inset-bottom) + 110px)}
 .screen{display:none}.screen.on{display:block}
 h1{font-size:30px;line-height:1.15;font-weight:800;letter-spacing:-.02em}
 h1 b{color:var(--y)}h2{font-size:20px;font-weight:700}
@@ -64,10 +64,14 @@ h1 b{color:var(--y)}h2{font-size:20px;font-weight:700}
 .sw{width:46px;height:26px;border-radius:99px;background:var(--line);position:relative;flex:none}.sw::after{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.2s}.sw.on{background:var(--y)}.sw.on::after{left:23px}
 h3{font-size:14px;color:var(--mute);margin-top:18px;font-weight:600}
 .avatar{width:110px;display:block;margin:6px auto 8px}
-nav{display:flex;border-top:1px solid var(--line);background:var(--card);padding-bottom:env(safe-area-inset-bottom)}
-nav button{flex:1;padding:10px 0 9px;font-size:11px;color:var(--mute);display:flex;flex-direction:column;align-items:center;gap:3px}
-nav button svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-nav button.on{color:var(--y);font-weight:700}
+nav#nav{position:absolute;bottom:calc(env(safe-area-inset-bottom) + 16px);left:16px;right:16px;width:auto;max-width:none;background:color-mix(in srgb,var(--card) 92%,transparent);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:38px;padding:6px;display:flex;align-items:center;border:1px solid color-mix(in srgb,var(--line) 80%,transparent);box-shadow:0 20px 35px -10px rgba(0,0,0,.25),0 10px 15px -5px rgba(0,0,0,.12);z-index:7}
+[data-theme=light] nav#nav{box-shadow:0 20px 35px -10px rgba(0,0,0,.08),0 10px 15px -5px rgba(0,0,0,.04)}
+nav#nav .indicator{position:absolute;top:6px;left:0;width:calc((100% - 12px)/4);height:calc(100% - 12px);border-radius:30px;background:color-mix(in srgb,var(--line) 70%,var(--card));transition:transform .45s cubic-bezier(.34,1.56,.64,1);z-index:0;pointer-events:none}
+nav#nav button{flex:1;min-width:0;height:68px;border:none;background:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--mute);position:relative;z-index:2;transition:color .25s;font-size:11px;font-weight:600;padding:0;gap:4px}
+nav#nav button.on{color:var(--text);font-weight:700}
+nav#nav button .icon{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:10px;transition:background .25s,color .25s}
+nav#nav button.on .icon{background:var(--y);color:var(--ink)}
+nav#nav button svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 #splash{position:fixed;inset:0;background:var(--bg);z-index:9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;transition:opacity .4s}
 #splash img{width:170px;animation:pop .6s ease-out}#splash h1{font-size:44px}
 .pbar{width:200px;height:6px;border-radius:9px;background:var(--line);margin-top:40px;overflow:hidden}#sbar{display:block;height:100%;width:0;background:var(--y)}
@@ -181,10 +185,11 @@ h3.sec{border-left:4px solid var(--y);padding-left:10px;color:var(--text);font-s
  </section>
 </main>
 <nav id="nav">
- <button data-go="home" class="on"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v10H3z"/></svg>Home</button>
- <button data-go="dl"><svg viewBox="0 0 24 24"><path d="M12 3v12m-5-5l5 5 5-5M4 21h16"/></svg>Download</button>
- <button data-go="history"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>History</button>
- <button data-go="profile"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>Profile</button>
+ <div class="indicator" id="navInd"></div>
+ <button data-go="home" class="on"><div class="icon"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v10H3z"/></svg></div><span>Home</span></button>
+ <button data-go="dl"><div class="icon"><svg viewBox="0 0 24 24"><path d="M12 3v12m-5-5l5 5 5-5M4 21h16"/></svg></div><span>Download</span></button>
+ <button data-go="history"><div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><span>History</span></button>
+ <button data-go="profile"><div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg></div><span>Profile</span></button>
 </nav>
 </div>
 <div id="ov" onclick="if(event.target===this)closeSheet()"><div class="sheet" id="sheet"></div></div>
@@ -208,7 +213,9 @@ function applyLang(){const id=cfg.lang==="id",w=document.createTreeWalker(docume
  $$("[placeholder]").forEach(e=>{e._p=e._p||e.placeholder;e.placeholder=id&&ID[e._p]||e._p});
  $$("[data-k]").forEach(e=>{e._h=e._h||e.innerHTML;const nv=id?ID[e.dataset.k]:e._h;if(e._c!==nv){e.innerHTML=nv;e._c=nv}})}
 let _q=0;new MutationObserver(()=>{if(!_q){_q=1;requestAnimationFrame(()=>{_q=0;applyLang()})}}).observe(document.body,{childList:true,subtree:true});
-function show(id){$$(".screen").forEach(s=>s.classList.toggle("on",s.id===id));const tab={progress:"dl",idle:"dl",done:"dl",settings:"profile",gallery:"home"}[id]||id;$$("#nav button").forEach(b=>b.classList.toggle("on",b.dataset.go===tab));$("main").scrollTop=0;if(id==="history")drawHist();if(id==="profile")drawProfile();if(id==="settings")$("#cacheV").textContent=fmt(Math.max(1,(localStorage.getItem("necrodl_hist")||"").length))}
+function moveNavInd(){const b=$("#nav button.on"),i=$("#navInd");if(b&&i)i.style.transform=`translateX(${b.offsetLeft}px)`}
+function show(id){$$(".screen").forEach(s=>s.classList.toggle("on",s.id===id));const tab={progress:"dl",idle:"dl",done:"dl",settings:"profile",gallery:"home"}[id]||id;$$("#nav button").forEach(b=>b.classList.toggle("on",b.dataset.go===tab));moveNavInd();$("main").scrollTop=0;if(id==="history")drawHist();if(id==="profile")drawProfile();if(id==="settings")$("#cacheV").textContent=fmt(Math.max(1,(localStorage.getItem("necrodl_hist")||"").length))}
+window.addEventListener("load",moveNavInd);window.addEventListener("resize",moveNavInd);
 document.addEventListener("click",e=>{const g=e.target.closest("[data-go]");if(!g)return;const t=g.dataset.go;show(t==="dl"?(job?"progress":last&&blob?"done":"idle"):t)});
 
 function applyCfg(){document.documentElement.dataset.theme=cfg.light?"light":"dark";$("#sw").classList.toggle("on",!cfg.light);$("#langV").textContent=cfg.lang==="id"?"Bahasa Indonesia":"English";$("#qualV").textContent=QN[cfg.q||"best"];store.set("necrodl_cfg",cfg);applyLang()}
